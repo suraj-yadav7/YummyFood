@@ -16,7 +16,7 @@ const foodDataSchema = new mongoose.Schema(
         },
         options:[{
             half:Number,
-            full:Number
+            full:Number,
         }],
         description:{
             type:String,

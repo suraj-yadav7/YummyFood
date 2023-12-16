@@ -13,7 +13,7 @@ const connectDb=async()=>{
         importData()
     }
     catch(error){
-        console.log("mongoDb Not connected", error)
+        console.log("mongoDb Not connected", error);
     }
 };
 
