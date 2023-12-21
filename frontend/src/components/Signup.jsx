@@ -1,40 +1,86 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 const Signup = () => {
+    const [formData, setFormData] = useState({fullName:"", email:"", password:""})
+    const [confirmPassword, setConfirmPassword] = useState("")
+
+    const handleSubmit = async(e)=>{
+        e.preventDefault()
+
+        if(formData.password === confirmPassword){
+            console.log("submit password match ", formData)
+            try{
+                const response = await fetch("http://localhost:3000/api/create-user",{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({name:formData.fullName, email:formData.email, password:formData.password})
+                })
+                console.log("post response", response)
+                let result = await response.json()
+                if(result.errors){
+                    alert("Enter valid 'Mail Id' & 'Name' must be > 4 letters")
+                }
+            }
+            catch(err){
+                console.log("error while user creation :: ", err)
+            }
+        }
+        else{
+            alert("Password don't match")
+        }
+    }
+
   return (
     <>
         <div className="bg-grey-lighter min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <div className=" px-6 py-8 rounded shadow-md text-black w-full" style={{backgroundColor:'#DBB657'}}>
-                    <h1 className="mb-8 text-3xl text-center">Sign up</h1>
-                    <input 
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="fullname"
-                        placeholder="Full Name" />
+                    <form onSubmit={handleSubmit}>
+                        <h1 className="mb-8 text-3xl text-center">Sign up</h1>
+                        <input 
+                            type="text"
+                            className="block border border-grey-light w-full p-3 rounded mb-4"
+                            name="fullName"
+                            placeholder="Full Name" 
+                            value={formData.fullName}
+                            onChange={(e)=> setFormData({...formData,[e.target.name]:e.target.value})}
+                            />
 
-                    <input 
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="email"
-                        placeholder="Email" />
+                        <input 
+                            type="text"
+                            className="block border border-grey-light w-full p-3 rounded mb-4"
+                            placeholder="Email" 
+                            name="email"
+                            value={formData.email}
+                            onChange={(e)=> setFormData({...formData,[e.target.name]:e.target.value})}
+                            
+                            />
 
-                    <input 
-                        type="password"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="password"
-                        placeholder="Password" />
-                    <input 
-                        type="password"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="confirm_password"
-                        placeholder="Confirm Password" />
+                        <input 
+                            type="password"
+                            className="block border border-grey-light w-full p-3 rounded mb-4"
+                            placeholder="Password" 
+                            name="password"
+                            value={formData.password}
+                            onChange={(e)=> setFormData({...formData, [e.target.name]:e.target.value})}
+                            />
+                        <input 
+                            type="password"
+                            className="block border border-grey-light w-full p-3 rounded mb-4"
+                            placeholder="Confirm Password" 
+                            name="confirmPassword"
+                            value={confirmPassword}
+                            onChange={(e)=> setConfirmPassword(e.target.value)}
+                            />
 
-                    <button
-                        type="submit"
-                        className="bg-green-500 w-full text-center py-3 rounded bg-green text-white hover:bg-green-200 focus:outline-none my-1"
-                        >Create Account</button>
+                        <button
+                            type="submit"
+                            className="bg-green-500 w-full text-center py-3 rounded bg-green text-white hover:bg-green-200 focus:outline-none my-1"
+                            >Create Account</button>
+                    </form>
 
                     <div className="text-center text-sm text-grey-dark mt-4">
                         By signing up, you agree to the 

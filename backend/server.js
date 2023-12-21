@@ -1,11 +1,12 @@
 import "dotenv/config"
 import express from 'express';
 import connectDb from './db.js';
-import router from "./Route/userRouter.js"
-import foodRouter from"./Route/userRouter.js"
+import userRouter from "./Route/userRouter.js"
 import { fData } from "./models/food.models.js";
 import mongoose from "mongoose";
 import cors from "cors"
+
+
 const app = express()
 const PORT = process.env.PORT;
 
@@ -30,16 +31,22 @@ app.get("/", (req,res)=>{
 app.use(express.json())
 
 // cors allow to handle CORS policy and don't allow other url to interact with backend.
-app.use(cors());
-app.use('/api', router);
+const corsOption = {
+    origin:"http://localhost:5173",
+    optionSuccessStatus:200
+}
+
+app.use(cors(corsOption));
+app.use('/api', userRouter);
+app.use('/api', userRouter)
 
 // app.use('/api',foodRouter);
 
 app.get('/api/food-details', async(req,res)=>{
    let collectionList= await mongoose.connection.db.collections()
-   console.log(collectionList)
     const result = await fData.find()
     res.send(result)
 });
+
 
 

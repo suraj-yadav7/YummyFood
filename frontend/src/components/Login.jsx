@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 const Login = () => {
   return (
     <>
-    {/* <!-- component --> */}
     {/* <!-- Container --> */}
     <div className="flex flex-wrap min-h-screen w-full content-center justify-center bg-gray-200 py-10">
       

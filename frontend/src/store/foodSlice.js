@@ -4,6 +4,7 @@ const initialState={
     status:false,
     foodData:[],
     userData:[],
+    cartData:[],
 }
 
 const foodSlice = createSlice({
@@ -14,9 +15,12 @@ const foodSlice = createSlice({
             state.status=true;
             
         },
+        addItemCart:(state,action)=>{
+            state.cartData.push(action.payload)
+        }
 
     }
 })
 
-export const {login} = foodSlice.actions
+export const {login,addItemCart} = foodSlice.actions
 export  default foodSlice.reducer;

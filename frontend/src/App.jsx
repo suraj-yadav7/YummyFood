@@ -6,13 +6,16 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import FoodItem from './components/FoodItem';
 import Home  from './components/Home';
+import Cart from './components/Cart';
 
 function App() {
 
   return (
     <>
       {/* <FoodItem /> */}
-      <Home/>
+      {/* <Home/> */}
+      {/* <Cart /> */}
+      <Signup />
     </>
   )
 };
