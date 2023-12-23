@@ -9,7 +9,6 @@ const Signup = () => {
         e.preventDefault()
 
         if(formData.password === confirmPassword){
-            console.log("submit password match ", formData)
             try{
                 const response = await fetch("http://localhost:3000/api/create-user",{
                     method:"POST",
@@ -18,14 +17,18 @@ const Signup = () => {
                     },
                     body:JSON.stringify({name:formData.fullName, email:formData.email, password:formData.password})
                 })
-                console.log("post response", response)
                 let result = await response.json()
+                console.log("post response", result)
+                if(result.status){
+                    setFormData({fullName:"", email:"", password:""})
+                    setConfirmPassword("")
+                }
                 if(result.errors){
                     alert("Enter valid 'Mail Id' & 'Name' must be > 4 letters")
                 }
             }
             catch(err){
-                console.log("error while user creation :: ", err)
+                console.log("Error while user creation :: ", err)
             }
         }
         else{

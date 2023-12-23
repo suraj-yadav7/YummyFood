@@ -38,7 +38,6 @@ const corsOption = {
 
 app.use(cors(corsOption));
 app.use('/api', userRouter);
-app.use('/api', userRouter)
 
 // app.use('/api',foodRouter);
 

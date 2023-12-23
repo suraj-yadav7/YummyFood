@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {},
+    colors:{
+      'redlava':'#D2122E'
+    }
   },
   plugins: [],
 }

@@ -1,7 +1,8 @@
 import  express  from "express";
 import {User} from "../models/user.models.js"
 import { body,validationResult } from "express-validator";
-
+import bcrypt from "bcryptjs";
+import jwt  from "jsonwebtoken";
 const userRouter = express.Router()
 
 // Create user router 
@@ -17,18 +18,22 @@ async (req,res)=>{
     if(!errors.isEmpty()){
         return res.status(400).json({errors:errors.array()});
     }
-    try{
-        // Here 'model.create' method used to create user details
-       await  User.create({ 
+    else{
+        const salt = await bcrypt.genSalt(10)
+        const securePassword = await bcrypt.hash(req.body.password,salt)
+        try{
+            // Here 'model.create' method used to create user details
+            await  User.create({ 
                 "name":req.body.name,
                 "email":req.body.email,
-                "password":req.body.password,
-        })
-        res.json({status:true, message:"User is created successfully"})
-    }
-    catch(error){
-        console.log("Error while creating user:: ", error)
-        res.json({status:false, message:"Failed to create user"})
+                "password":securePassword,
+            })
+            return res.json({status:true, message:"User is created successfully"})
+        }
+        catch(error){
+            console.log("Error while creating user:: ", error)
+           return res.json({status:false, message:"Failed to create user"})
+        }
     }
 })
 
@@ -37,18 +42,27 @@ async (req,res)=>{
 // Login User Router
 // $$$$$$$$$$$$$$$$$
 
+const jwtSecretStr="thisisAsceretstringforJWT"
 
 userRouter.post("/login-user", async(req,res)=>{
     let email=req.body.email
     try{
         let userData = await User.findOne({email})
         if(!userData){
-            return res.status(400).json({errors:"try loggin with correct credentials"})
+            return res.status(400).json({status:false,errors:"try login with correct credentials"})
         }
-        if(userData.password !== req.body.password){
-            return res.status(400).json({error:"Invalid Credential. Try again...."})
+        const comparePassword= await bcrypt.compare(req.body.password,userData.password) 
+        if(!comparePassword){
+            return res.status(400).json({errors:"Invalid Credential. Try again...."})
         }
-        res.status(200)
+        const data={
+            user:{
+                id:userData.id
+            }
+        }
+        const JWTToken=  jwt.sign(data,jwtSecretStr)
+        // console.log("token :: ", JWTToken)
+        return res.status(200).json({status:true,message:"User found",jwtToken:JWTToken})
     }
     catch(err){
         console.log("error while login user :: ", err)

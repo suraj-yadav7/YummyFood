@@ -12,10 +12,9 @@ function App() {
 
   return (
     <>
-      {/* <FoodItem /> */}
-      {/* <Home/> */}
-      {/* <Cart /> */}
-      <Signup />
+    <Navbar />
+    <Outlet />
+    <Footer/>
     </>
   )
 };

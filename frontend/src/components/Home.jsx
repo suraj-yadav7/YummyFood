@@ -17,14 +17,15 @@ export const Home = () => {
     
   return (
     <>
-        <section className='starter'>
+    <div className='px-28'>
+       <section className='starter'>
         <div className='p-2'><h3 className='bold text-2xl font-bold'>The starter</h3></div>
         <div className='flex flex-wrap gap-4 max-sm:justify-center text-center '>
           {
             foodData&& foodData.filter((elem)=> elem.categoryName === "Starter").map((elem)=>(
               <FoodItem details={elem}/>
-            ))
-          }
+              ))
+            }
         </div>
         </section>
         <section className='maincourse'>
@@ -35,8 +36,8 @@ export const Home = () => {
           {
             foodData&& foodData.filter((elem)=> elem.categoryName === "Biryani/Rice").map((elem)=>(
               <FoodItem details={elem}/>
-            ))
-          }
+              ))
+            }
         </div>
         </section>
         <section className='desert'>
@@ -46,10 +47,11 @@ export const Home = () => {
           {
             foodData&& foodData.filter((elem)=> elem.categoryName === "Desert").map((elem)=>(
               <FoodItem details={elem} />
-            ))
-          }
+              ))
+            }
         </div>
         </section>
+            </div>
     </>
   )
 };  

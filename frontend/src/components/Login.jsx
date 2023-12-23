@@ -1,7 +1,35 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link,useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate()
+  const [loginData, setLoginData] = useState({email:"",password:""})
+  const handleLogin = async(e)=>{
+    e.preventDefault()
+    try{
+      let response = await fetch('http://localhost:3000/api/login-user',{
+        method:"POST",
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({email:loginData.email, password:loginData.password})
+      });
+      let result = await response.json()
+      if(result.status){
+        localStorage.setItem("jwttoken",result.jwtToken)
+        setLoginData({email:"", password:""})
+        navigate("/")
+      }
+      if(!result.status){
+        alert(result.errors)
+      }
+      console.log("Post login response:: ", result)
+    }
+    catch(error){
+      console.log("Error while login:: ", error)
+    }
+  }
+
   return (
     <>
     {/* <!-- Container --> */}
@@ -10,22 +38,22 @@ const Login = () => {
       {/* <!-- Login component --> */}
       <div className="flex flex-wrap shadow-md">
         {/* <!-- Login form --> */}
-        <div className="flex flex-wrap content-center justify-center rounded-l-md bg-white" style={{"width": "24rem", "height": "32rem"}}>
+        <div className="flex flex-wrap content-center justify-center rounded-l-md bg-whte" style={{"width": "24rem", "height": "32rem"}}>
           <div className="w-72">
             {/* <!-- Heading --> */}
             <h1 className="text-xl font-semibold">Welcome back</h1>
             <small className="text-gray-400">Welcome back! Please enter your details</small>
 
             {/* <!-- Form --> */}
-            <form className="mt-4">
+            <form className="mt-4" onSubmit={handleLogin}>
               <div className="mb-3">
                 <label className="mb-2 block text-xs font-semibold">Email</label>
-                <input type="email" placeholder="Enter your email" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500" />
+                <input type="email" name="email" value={loginData.email} onChange={(e)=>{setLoginData({...loginData,[e.target.name]:e.target.value})}}  placeholder="Enter your email" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500" />
               </div>
 
               <div className="mb-3">
                 <label className="mb-2 block text-xs font-semibold">Password</label>
-                <input type="password" placeholder="*****" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500" />
+                <input type="password" name="password" value={loginData.password} onChange={(e=>setLoginData({...loginData,[e.target.name]:e.target.value}))} placeholder="*****" className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500" />
               </div>
 
               <div className="mb-3">
