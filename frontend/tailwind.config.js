@@ -7,7 +7,10 @@ export default {
   theme: {
     extend: {},
     colors:{
-      'redlava':'#D2122E'
+      'redlava':'#D2122E',
+      "redlight":"#F75D59",
+      'white':"#ffff",
+      "black":'#00000'
     }
   },
   plugins: [],

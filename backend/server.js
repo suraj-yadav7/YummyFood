@@ -2,6 +2,7 @@ import "dotenv/config"
 import express from 'express';
 import connectDb from './db.js';
 import userRouter from "./Route/userRouter.js"
+import orderRouter from "./Route/orderHistory.js"
 import { fData } from "./models/food.models.js";
 import mongoose from "mongoose";
 import cors from "cors"
@@ -38,6 +39,8 @@ const corsOption = {
 
 app.use(cors(corsOption));
 app.use('/api', userRouter);
+app.use('/api', orderRouter);
+app.use('/api', orderRouter)
 
 // app.use('/api',foodRouter);
 

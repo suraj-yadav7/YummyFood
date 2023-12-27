@@ -2,8 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
     status:false,
-    foodData:[],
-    userData:[],
     cartData:[],
 }
 
@@ -16,11 +14,25 @@ const foodSlice = createSlice({
             
         },
         addItemCart:(state,action)=>{
-            state.cartData.push(action.payload)
+            state.cartData = [...state.cartData, action.payload]
+        },
+        removeItem:(state, action)=>{
+            if(action.payload.length ===0){
+                state.cartData=[]
+            }
+            const filterItems=state.cartData.filter((items)=> items.id != action.payload.id)
+            state.cartData = filterItems
+        },
+        updateItem:(state, action)=>{
+           const update= state.cartData.map((item)=>{
+                if(item.id === action.payload.id && item.portion == 'half'){
+                    item.quant = parseInt(item.quant)+ parseInt(action.payload.quant)
+                }
+            })
         }
 
     }
 })
 
-export const {login,addItemCart} = foodSlice.actions
+export const {login,addItemCart,removeItem,updateItem} = foodSlice.actions
 export  default foodSlice.reducer;

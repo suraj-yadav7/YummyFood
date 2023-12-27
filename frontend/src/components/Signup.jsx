@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [formData, setFormData] = useState({fullName:"", email:"", password:""})
     const [confirmPassword, setConfirmPassword] = useState("")
+    const navigate = useNavigate()
 
     const handleSubmit = async(e)=>{
         e.preventDefault()
@@ -22,6 +23,7 @@ const Signup = () => {
                 if(result.status){
                     setFormData({fullName:"", email:"", password:""})
                     setConfirmPassword("")
+                    navigate("/login")
                 }
                 if(result.errors){
                     alert("Enter valid 'Mail Id' & 'Name' must be > 4 letters")

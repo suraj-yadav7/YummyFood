@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  const navigate = useNavigate()
   const [loginData, setLoginData] = useState({email:"",password:""})
+  const navigate = useNavigate()
+
   const handleLogin = async(e)=>{
     e.preventDefault()
     try{
@@ -15,8 +16,10 @@ const Login = () => {
         body:JSON.stringify({email:loginData.email, password:loginData.password})
       });
       let result = await response.json()
+      console.log("in login :: ", result)
       if(result.status){
-        localStorage.setItem("jwttoken",result.jwtToken)
+        sessionStorage.setItem("jwttoken",result.jwtToken)
+        sessionStorage.setItem("loginUserId",result.userid)
         setLoginData({email:"", password:""})
         navigate("/")
       }
