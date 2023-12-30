@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 import { Link,useNavigate } from 'react-router-dom'
 
 const Login = () => {
@@ -16,8 +17,9 @@ const Login = () => {
         body:JSON.stringify({email:loginData.email, password:loginData.password})
       });
       let result = await response.json()
-      console.log("in login :: ", result)
+      console.log("login :: ", result)
       if(result.status){
+        toast.success("User Logged In")
         sessionStorage.setItem("jwttoken",result.jwtToken)
         sessionStorage.setItem("loginUserId",result.userid)
         setLoginData({email:"", password:""})
@@ -31,17 +33,17 @@ const Login = () => {
     catch(error){
       console.log("Error while login:: ", error)
     }
-  }
+  };
 
   return (
     <>
     {/* <!-- Container --> */}
-    <div className="flex flex-wrap min-h-screen w-full content-center justify-center bg-gray-200 py-10">
+    <div className="flex flex-wrap min-h-screen w-full content-center  justify-center bg-gray-600 py-10">
       
       {/* <!-- Login component --> */}
-      <div className="flex flex-wrap shadow-md">
+      <div className="flex flex-wrap shadow-xl border border-1-black">
         {/* <!-- Login form --> */}
-        <div className="flex flex-wrap content-center justify-center rounded-l-md bg-whte" style={{"width": "24rem", "height": "32rem"}}>
+        <div className="flex flex-wrap content-center justify-center rounded-l-md bg-whte" style={{minWidth: "20vw"}}>
           <div className="w-72">
             {/* <!-- Heading --> */}
             <h1 className="text-xl font-semibold">Welcome back</h1>
@@ -60,14 +62,14 @@ const Login = () => {
               </div>
 
               <div className="mb-3">
-                <button className="mb-1.5 block w-full text-center text-white bg-purple-700 hover:bg-purple-900 px-2 py-1.5 rounded-md">Sign in</button>
+                <button className="mb-1.5 block w-full text-center text-white bg-redlava hover:bg-purple-900 px-2 py-1.5 rounded-md hover:bg-redlight">Sign in</button>
               </div>
             </form>
 
             {/* <!-- Footer --> */}
             <div className="text-center">
               <span className="text-xs text-gray-400 font-semibold">Don't have account?</span>
-              <Link to="/signup" className="text-xs font-semibold text-purple-700">Sign up</Link>
+              <Link to="/signup" className="text-xs font-semibold text-purple-700 hover:text-redlight">Sign up</Link>
             </div>
           </div>
         </div>
@@ -81,6 +83,6 @@ const Login = () => {
     </div>
     </>
   )
-}
+};
 
-export default Login
+export default Login;

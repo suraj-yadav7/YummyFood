@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from "react-redux"
-import { addItemCart,updateItem } from '../store/foodSlice'
+import { addItemCart,updateItem } from '../store/foodSlice';
+import {toast} from "react-hot-toast";
+
 
 const FoodItem = ({details}) => {
 const [price, setPrice] = useState(details.options[0].half)
@@ -17,6 +19,7 @@ setTotalPrice(totalPriceVal)
 }
 
 const handleCartChange = (e)=>{
+    toast.success("Item Added to Cart")
     if(itemOfCart.length>0){
         for(let elem of itemOfCart){
             if(elem.id == details._id && portionType !=='full'){
@@ -55,9 +58,9 @@ useEffect(()=>{
                 <img className='w-full h-full bg-cover bg-center bg-no-repeat  rounded-lg' src={details.img} />
             </div>
             <hr/>
-                <h3 className='mt-3 font-bold text-lg' value={details.name} name="itemName">{details.name}</h3>
+                <h3 className='mt-3 font-lora  text-lg' value={details.name} name="itemName">{details.name}</h3>
             <div className='flex my-3    '>
-                <div >
+                <div className='font-carrois' >
                     <label>Quantity</label>
                     <select className='rounded border border-gray-500' onChange={(e)=>{setQuantity(e.target.value)}}>
                         <option value={1} name="quantity">1</option>
@@ -67,7 +70,7 @@ useEffect(()=>{
                         <option value={5}>5</option>
                     </select>
                 </div>
-                <div>
+                <div className='font-carrois' >
                     <label>Portion</label>
                     <select className=' rounded border border-gray-500' onChange={(e)=>{ {const selectedOption = e.target.options[e.target.selectedIndex];
                          const portionTypeName = selectedOption.getAttribute('name');
@@ -78,14 +81,14 @@ useEffect(()=>{
                     </select>
                 </div>
             </div>
-            <h4 className='p-2 font-medium' >Total:{totalPrice}</h4>
+            <h4 className='p-2 font-lora ' >Total: <span>&#8377;</span> {totalPrice}/-</h4>
             <div className='flex gap-3 '>
-                <button className='text-white text-l p-2 rounded-lg bg-redlava border-1 border-black hover:bg-redlight' onClick={(e)=>handleCartChange(e)}>Add to cart</button>
+                <button className='text-white font-raleway font-medium text-sm p-2 rounded-lg bg-redlava border-1 border-black hover:bg-redlight' onClick={(e)=>handleCartChange(e)}>Add to cart</button>
             </div>
         </div>
 }
     </>
   )
-}
+};
 
 export default FoodItem;

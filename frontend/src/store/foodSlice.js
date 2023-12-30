@@ -26,7 +26,7 @@ const foodSlice = createSlice({
         updateItem:(state, action)=>{
            const update= state.cartData.map((item)=>{
                 if(item.id === action.payload.id && item.portion == 'half'){
-                    item.quant = parseInt(item.quant)+ parseInt(action.payload.quant)
+                    item.quant =  parseInt(action.payload.quant)
                 }
             })
         }
