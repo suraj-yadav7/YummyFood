@@ -33,7 +33,9 @@ app.use(express.json())
 
 // cors allow to handle CORS policy and don't allow other url to interact with backend.
 const corsOption = {
-    origin:"http://localhost:5173",
+    origin:"https://yummy-frontend.vercel.app",
+    methods:["POST", "GET"],
+    credentials:true,
     optionSuccessStatus:200
 }
 

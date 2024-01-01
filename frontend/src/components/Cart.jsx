@@ -63,14 +63,14 @@ const Cart = () => {
   }, [allCartItem]);
   return (
     <>
-        <div className="cart font-lora  text-black" style={{ minHeight: "80vh" }}>
+        <div className=" px-1  cart font-lora  text-black" style={{ minHeight: "80vh" }}>
             <div className="flex justify-center items-center flex-col ">
-                <h3 className="text-2xl p-4 font-roboto font-semibold">Cart Items</h3>
+                <h3 className="text-2xl p-4 font-rayle font-semibold max-sm:text-lg ">Cart Items</h3>
                 {itemsList.length > 0 ? (
                     <div>
                         <table className="border ">
-                            <tr>
-                            <th className="px-5 max-sm:px-1 max-sm:text-sm max-sm:font-medium">S.No</th>
+                            <tr className="border-b ">
+                            <th className="px-5 py-1 max-sm:px-1 max-sm:text-sm max-sm:font-medium">S.No</th>
                             <th className="px-5 max-sm:px-1 max-sm:text-sm max-sm:font-medium">Name</th>
                             <th className="px-5 max-sm:px-1 max-sm:text-sm max-sm:font-medium">Qty</th>
                             <th className="px-5 max-sm:px-1 max-sm:text-sm max-sm:font-medium">Option</th>
@@ -80,28 +80,28 @@ const Cart = () => {
                             </tr>
                             {itemsList.length > 0 &&
                             itemsList.map((elem, index) => (
-                            <tr key={elem.id}>
-                                <td className="px-8 py-2 max-sm:px-1 max-sm:py-1 max-sm:text-sm">{index + 1}</td>
-                                <td className="px-8 py-2 max-sm:px-1 max-sm:py-1 max-sm:text-sm">{elem.name}</td>
-                                <td className="px-8 py-2 max-sm:px-1 max-sm:py-1 max-sm:text-sm">{elem.quant}</td>
-                                <td className="px-8 py-2 max-sm:px-1 max-sm:py-1 max-sm:text-sm">{elem.portion}</td>
-                                <td className="px-8 py-2 max-sm:px-1 max-sm:py-1 max-sm:text-sm">{elem.pric}</td>
-                                <td className="px-8 py-2 max-sm:px-1 max-sm:py-1 max-sm:text-sm">
+                            <tr  key={elem.id}>
+                                <td className="px-8 py-4 max-sm:px-1 max-sm:text-sm">{index + 1}</td>
+                                <td className="px-8 py-4 max-sm:px-1  max-sm:text-sm">{elem.name}</td>
+                                <td className="px-8 py-4 max-sm:px-3  max-sm:text-sm">{elem.quant}</td>
+                                <td className="px-8 py-4 max-sm:px-1  max-sm:text-sm">{elem.portion}</td>
+                                <td className="px-8 py-4 max-sm:px-2  max-sm:text-sm">{elem.pric}</td>
+                                <td className="px-8 py-4 max-sm:px-1  max-sm:text-sm">
                                 <span>&#8377;</span> {elem.quant * elem.pric}
                                 </td>
                                 <td className="px-8 py-2 max-sm:px-1 max-sm:py-1 ">
                                 <button
-                                className="bg-redlava text-white border border-gray rounded-md  hover:text-redlight  px-5 max-sm:px-1"
+                                className="bg-redlava text-white border text-md border-gray rounded-md  hover:text-redlight  px-5 max-sm:px-1 max-sm:text-sm"
                                 onClick={() => handleDelete(elem)}>Delete</button>
                                 </td>
                             </tr>
                             ))}
                         </table>
                     <div className="flex justify-center items-center gap-8 py-3 max-sm:gap-4 max-sm:py-2 ">
-                        <button className=" bg-green px-3 py-2 rounded-md text-white border border-gray  hover:bg-greenlight max-sm:px-2 max-sm:py-1"  disabled={infoUser} onClick={orderCreation}>
+                        <button className=" bg-green px-3 py-2 rounded-md text-white border border-gray  hover:bg-greenlight max-sm:px-2 max-sm:py-1 max-sm:text-sm"  disabled={infoUser} onClick={orderCreation}>
                         Check Out
                         </button>
-                        <h3 className="text-2xl font-semibold max-sm:text-xl">Total= <span>&#8377;</span> {total}/-</h3>
+                        <h3 className="text-2xl font-semibold max-sm:text-sm">Total= <span>&#8377;</span> {total}/-</h3>
                     </div>
                     {btnInfo && (
                         <div className="py-4 text-center">
@@ -116,7 +116,7 @@ const Cart = () => {
                 </div>) 
                 : (
                     <div className="text-center ">
-                        <h3 className="text-3xl border-1 bg-redlight py-4 px-8">
+                        <h3 className="text-xl border-1 bg-redlight py-2 px-4 rounded-lg text-white">
                             Cart is Empty
                         </h3>
                     </div>

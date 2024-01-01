@@ -5,11 +5,12 @@ import FoodItem from "./FoodItem";
 export const Home = () => {
   const [foodData, setFoodData] = useState("");
   const [loading, setLoading] = useState(true);
+  
   // fetching data from backend
   const fetchFoodData = async () => {
     let response = await fetch("http://localhost:3000/api/food-details");
     let data = await response.json();
-    let newData = data.slice(0, 16);
+    let newData = data.slice(0, 15);
     setFoodData(newData);
     setLoading(false)
   };
@@ -22,7 +23,7 @@ export const Home = () => {
     <>
       {!loading ? (
         <div className="px-28 ">
-          <section className="starter ">
+          <section className="starter my-2 ">
             <div className="p-2 ">
               <h3 className="font-roboto text-2xl font-bold max-sm:text-center max-sm:text-xl ">Starter</h3>
             </div>
@@ -33,9 +34,9 @@ export const Home = () => {
                   .map((elem) => <FoodItem key={elem._id} details={elem} />)}
             </div>
           </section>
-          <section className="maincourse max-sm:mt-5">
+          <section className="my-5 maincourse max-sm:mt-5">
             <div className="p-2">
-              <h3 className="font-roboto text-2xl font-bold max-sm:text-center max-sm:text-xl ">Main course</h3>
+              <h3 className="font-roboto text-2xl font-bold max-sm:text-center max-sm:text-xl ">Main Course</h3>
             </div>
             <div className="flex flex-wrap gap-4 max-sm:justify-center text-center ">
               {foodData &&
@@ -44,7 +45,7 @@ export const Home = () => {
                   .map((elem) => <FoodItem key={elem._id} details={elem} />)}
             </div>
           </section>
-          <section className="desert max-sm:mt-5">
+          <section className="my-4 desert max-sm:mt-5">
             <div className="p-2">
               <h3 className="font-roboto text-2xl font-bold max-sm:text-center max-sm:text-xl ">Desert</h3>
             </div>

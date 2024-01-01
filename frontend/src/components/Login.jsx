@@ -26,7 +26,7 @@ const Login = () => {
         navigate("/")
       }
       if(!result.status){
-        alert(result.errors)
+        toast.error(result.errors)
       }
       console.log("Post login response:: ", result)
     }
@@ -38,12 +38,12 @@ const Login = () => {
   return (
     <>
     {/* <!-- Container --> */}
-    <div className="flex flex-wrap min-h-screen w-full content-center  justify-center bg-gray-600 py-10">
+    <div className="flex flex-wrap min-h-screen w-full content-center justify-center bg-gray-600 py-10">
       
       {/* <!-- Login component --> */}
-      <div className="flex flex-wrap shadow-xl border border-1-black">
+      <div className="flex flex-wrap shadow-xl border border-1-black max-sm:justify-center max-sm:items-center ">
         {/* <!-- Login form --> */}
-        <div className="flex flex-wrap content-center justify-center rounded-l-md bg-whte" style={{minWidth: "20vw"}}>
+        <div className="flex flex-wrap content-center justify-center rounded-l-md bg-white " style={{minWidth: "20vw"}} >
           <div className="w-72">
             {/* <!-- Heading --> */}
             <h1 className="text-xl font-semibold">Welcome back</h1>
@@ -67,7 +67,7 @@ const Login = () => {
             </form>
 
             {/* <!-- Footer --> */}
-            <div className="text-center">
+            <div className="text-center max-sm:pb-2">
               <span className="text-xs text-gray-400 font-semibold">Don't have account?</span>
               <Link to="/signup" className="text-xs font-semibold text-purple-700 hover:text-redlight">Sign up</Link>
             </div>

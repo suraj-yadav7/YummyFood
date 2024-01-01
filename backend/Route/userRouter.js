@@ -8,7 +8,7 @@ const userRouter = express.Router()
 // Create user router 
 userRouter.post('/create-user',
 [
-    body("name").isLength({min:5}),
+    body("name").isLength({min:4}),
     body("email").isEmail(),
     body("password").isLength({min:5})
 ],
@@ -22,14 +22,22 @@ async (req,res)=>{
         const salt = await bcrypt.genSalt(10)
         const securePassword = await bcrypt.hash(req.body.password,salt)
         try{
+            let email = req.body.email
+            // Checing if user already exist with same mail_id
+            let userData = await User.findOne({email})
             // Here 'model.create' method used to create user details
-            await  User.create({ 
-                "name":req.body.name,
-                "email":req.body.email,
-                "password":securePassword,
-            })
-            return res.json({status:true, message:"User is created successfully"})
-        }
+            if(!userData){
+                await  User.create({ 
+                    "name":req.body.name,
+                    "email":req.body.email,
+                    "password":securePassword,
+                })
+                return res.status(200).json({status:true, message:"User is created successfully"})
+                }
+            else{
+                   res.status(400).json({status:false,message:"Already User with same 'Mail Id' Exist" })
+                }
+            }
         catch(error){
             console.log("Error while creating user:: ", error)
            return res.json({status:false, message:"Failed to create user"})
@@ -48,9 +56,8 @@ userRouter.post("/login-user", async(req,res)=>{
     let email=req.body.email
     try{
         let userData = await User.findOne({email})
-        console.log("login user data ", userData)
         if(!userData){
-            return res.status(400).json({status:false,errors:"try login with correct credentials"})
+            return res.status(400).json({status:false,errors:"Try login with correct credentials"})
         }
         const comparePassword= await bcrypt.compare(req.body.password, userData.password) 
         if(!comparePassword){

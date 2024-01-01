@@ -30,7 +30,7 @@ const Navbar = () => {
               sessionStorage.getItem('jwttoken')?
               <div className='flex gap-2 justify-center items-center'>
                 <Link to="/order-history" className='hover:text-redlava text-center'><li>My Order</li></Link>
-                <Link to="/login" className='hover:text-redlava border border-1 px-2 rounded-md max-sm:px-1' onClick={()=>{sessionStorage.clear(), toast.error("User Logout")}  }><li>Logout</li></Link>
+                <Link to="/login" className='hover:text-redlava border border-1 px-2 rounded-md max-sm:px-1' onClick={()=>{sessionStorage.clear(), toast.error("User Logged Out")}  }><li>Logout</li></Link>
               </div>
                 
               : <div className='flex gap-3' >
